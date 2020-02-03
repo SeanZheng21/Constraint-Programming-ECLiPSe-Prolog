@@ -49,7 +49,8 @@ commande(10000,8000). No
 */
 
 /**Q1.5
-trace.
+See image at:
+https://github.com/CarlistleZ/ConstraintTP/blob/master/TP1/IMG_0235.jpg
 
 */
 
