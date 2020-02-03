@@ -296,23 +296,29 @@ faitListe(ListVar,Taille,Min,Max):-
 		Elem#::Min..Max
 	).
 
-
+/*Q1.14*/
 faitSuite([_,_]).
 faitSuite([X,Y,Z|R]):-
 	vabs(Y,Yabs),
 	Z #= Yabs - X,
 	faitSuite([Y,Z|R]).
 
+/*Q1.15*/
 periode_neuf([X,Y,_,_,_,_,_,_,_,X1,Y1]):-
 	X#=X1,
 	Y#=Y1.
 
 contre_exemple:-
-	X#::(-100..100),
-	Y#::(-100..100),
+	X#::(-10000..10000),
+	Y#::(-10000..10000),
 	faitSuite([X,Y,_,_,_,_,_,_,_,X1,Y1]),
 	(X#\=X1) or (Y#\=Y1),
 	labeling([X,Y]).
 
+/**
+Pour avoir une période de 9 il suffit que le 10 élément soit égal au 1er et le 11e au 2e, puisque la suite est définie par ses deux derniers éléments
+lorsqu'on execute contre_exemple, on obtient No, ce qui signifie qu'aucune liste qui satisfait la suite n'est pas de période 9
+-> Toutes les listes satisfaisant la suite sont de période 9
+*/
 
 
