@@ -49,8 +49,7 @@ getVarList(Rue,Liste):-
         Out = [P,C,B,V,A|In]
     ).
 labeling_symbolic(Liste):-
-    getVarList(Liste,VarList),
-    (foreach(Elem,VarList)
+    (foreach(Elem,Liste)
     do
         ic_symbolic:indomain(Elem)
 
@@ -58,34 +57,39 @@ labeling_symbolic(Liste):-
 
 
 /**Q2.6*/
-enigma(Rue):-
-    (foreach(m(P, C, B, V, A,N),Rue),
+enigma_unary(Rue):-
+    (foreach(m(P, C, B, V, A, N),Rue)
     do 
-        ( P&=anglais ) #= ( C&=rouge ),
-        ( P&=espagnol )#= ( A&=chien ),
-        ( C&=verte ) #= ( B&=cafe ),
-        ( P&=ukrainien ) #= ( B&=the ),
-        ( V&=bmw ) #= ( A&=serpents ),
-        ( C&=jaune ) #= ( V&=toyota ),
-        ( B&=lait ) #= ( N#=3 ),
-        ( P&=norvegien ) #= ( N#=1 ),
-        ( V&=honda ) #= ( B&=jus ),
-        ( P&=japonais ) #= ( V&=datsun ),
-        ( C&=verte )=>(foreach(m(_, C2, _, _, _, N2),Rue),
+        ( P &= anglais ) => ( C &= rouge ),
+        ( P &= espagnol ) => ( A &= chien ),
+        ( C &= verte ) => ( B &= cafe ),
+        ( P &= ukrainien ) => ( B &= the ),
+        ( V &= bmw ) => ( A &= serpents ),
+        ( C &= jaune ) => ( V &= toyota ),
+        ( B &= lait ) => ( N #= 3 ),
+        ( P &= norvegien ) => ( N #= 1 ),
+        ( V &= honda ) => ( B &= jus ),
+        ( P &= japonais ) => ( V &= datsun )
+    ).
+
+enigma_binary(Rue):-
+    (foreach(m(P, C, B, V, A, N),Rue)
+    do 
+        ( C &= verte ) => (foreach(m(_, C2, _, _, _, N2),Rue)
             do
-            (C2&=blanche)=>((N2#=N+1) or (N2#=N-1))
+            ( C2 &= blanche ) => ( (N2 #= N+1) or (N2 #= N-1) )
         ),
-        (A&=renard)=>(foreach(m(_,_, _,V2, _, N2),Rue),
+        (A &= renard) => (foreach(m(_,_, _,V2, _, N2),Rue)
             do
-            (V2&=ford)=>((N2#=N+1) or (N2#=N-1))
+            (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
         ),
-        (A&=cheval)=>(foreach(m(_,_, _,V2, _, N2),Rue),
+        (A &= cheval) => (foreach(m(_,_, _,V2, _, N2),Rue)
             do
-            (V2&=toyota)=>((N2#=N+1) or (N2#=N-1))
+            (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
         ),
-        (P&=norvegien)=>(foreach(m(_,C2, _,_, _, N2),Rue),
+        (P &= norvegien)=>(foreach(m(_,C2, _,_, _, N2),Rue)
             do
-            (C2&=bleue)=>((N2#=N+1) or (N2#=N-1))
+            (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
         )
     ).
         
@@ -93,8 +97,8 @@ enigma(Rue):-
 
 resoudre(Rue):-
     rue(Rue),
-    enigma(Rue),
     getVarList(Rue,Liste),
+    enigma_unary(Rue),
     labeling_symbolic(Liste),
     ecrit_maisons(Rue).
 
