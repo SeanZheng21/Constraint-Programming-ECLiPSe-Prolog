@@ -73,32 +73,24 @@ enigma_unary(Rue):-
     ).
 
 enigma_binary(Rue):-
-    (foreach(m(P, C, B, V, A, N),Rue)
+    (foreach(m(P1, C1, _, _, A1, N1),Rue),
+    param(Rue)
     do 
-        ( C &= verte ) => (
-            foreach(m(_, C2, _, _, _, N2),Rue),
-            param(N)
-            do
-            ( C2 &= blanche ) => ( (N2 #= N+1) or (N2 #= N-1) )
-        ),
-        (A &= renard) => (
-            foreach(m(_,_, _,V2, _, N2),Rue),
-            param(N)
-            do
-            (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
-        ),
-        (A &= cheval) => (
-            foreach(m(_,_, _,V2, _, N2),Rue),
-            param(N)
-            do
-            (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
-        ),
-        (P &= norvegien)=>(
-            foreach(m(_,C2, _,_, _, N2),Rue),
-            param(N)
-            do
-            (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
-        )
+        foreach(m(_, C2, _, V2, _, N2),Rue),
+        param(P1, C1, B1, V1, A1, N1)
+        do
+            ( C1 &= verte ) => (
+                            ( C2 &= blanche ) => ( (N2 #= N-1) )
+            ),
+            (A1 &= renard) => (
+                (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
+            ),
+            (A1 &= cheval) => (
+                (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
+            ),
+            (P1 &= norvegien) => (
+                (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
+            )
     ).
         
 

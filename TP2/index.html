@@ -64,7 +64,11 @@ rue([m(P1, C1, B1, V1, A1, 1), m(P2, C2, B2, V2, A2, 2), m(P3, C3, B3, V3, A3, 3
 
 Yes (0.00s cpu)
 			</code>
-		</pre>
+        </pre>
+        <h3>Question de Compréhension</h3>
+        <p>
+            On aurait pu contraindre les numéros de maisons entre 1 et 5 et à être toutes différentes, mais cela aurait rendu l'arbre de recherche bien plus gros et donc ralenti la recherche
+        </p>
 	</div>
 
 		<!-- -----------Q4--------------- -->
@@ -147,24 +151,24 @@ enigma_unary(Rue):-
     ).
 
 enigma_binary(Rue):-
-    (foreach(m(P, C, B, V, A, N),Rue)
+    (foreach(m(P1, C1, _, _, A1, N1),Rue),
+    param(Rue)
     do 
-        ( C &= verte ) => (foreach(m(_, C2, _, _, _, N2),Rue)
-            do
-            ( C2 &= blanche ) => ( (N2 #= N+1) or (N2 #= N-1) )
-        ),
-        (A &= renard) => (foreach(m(_,_, _,V2, _, N2),Rue)
-            do
-            (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
-        ),
-        (A &= cheval) => (foreach(m(_,_, _,V2, _, N2),Rue)
-            do
-            (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
-        ),
-        (P &= norvegien)=>(foreach(m(_,C2, _,_, _, N2),Rue)
-            do
-            (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
-        )
+        foreach(m(_, C2, _, V2, _, N2),Rue),
+        param(P1, C1, B1, V1, A1, N1)
+        do
+            ( C1 &= verte ) => (
+                            ( C2 &= blanche ) => ( (N2 #= N-1) )
+            ),
+            (A1 &= renard) => (
+                (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
+            ),
+            (A1 &= cheval) => (
+                (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
+            ),
+            (P1 &= norvegien) => (
+                (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
+            )
     ).
 
 
@@ -180,6 +184,7 @@ resoudre(Rue):-
     rue(Rue),
     getVarList(Rue,Liste),
     enigma_unary(Rue),
+    enigma_binary(Rue),
     labeling_symbolic(Liste),
     ecrit_maisons(Rue).
 
@@ -189,19 +194,24 @@ resoudre(Rue):-
 		<h3>Test</h3>
         <pre>
             <code>
-[eclipse 11]: resoudre(R).
+[eclipse 78]: resoudre(Rue).
 m(norvegien, blanche, jus, honda, cheval, 1)
 m(ukrainien, jaune, the, toyota, renard, 2)
 m(japonais, bleue, lait, datsun, zebre, 3)
 m(espagnol, verte, cafe, ford, chien, 4)
 m(anglais, rouge, eau, bmw, serpents, 5)
 
-R = [m(norvegien, blanche, jus, honda, cheval, 1), m(ukrainien, jaune, the, toyota, renard, 2), m(japonais, bleue, lait, datsun, zebre, 3), m(espagnol, verte, cafe, ford, chien, 4), m(anglais, rouge, eau, bmw, serpents, 5)]
-Yes (0.00s cpu, solution 1, maybe more) ? 
+Rue = [m(norvegien, blanche, jus, honda, cheval, 1), m(ukrainien, jaune, the, toyota, renard, 2), m(japonais, bleue, lait, datsun, zebre, 3), m(espagnol, verte, cafe, ford, chien, 4), m(anglais, rouge, eau, bmw, serpents, 5)]
 
+There are 256 delayed goals. Do you want to see them? (y/n)
             </code>
         </pre>
-	</div>
+    </div>
+    
+    <div>
+        <h2>Question8</h2>
+        <p>Il manque quelque chose à notre code puisqu'on a encore des delayed goals et plusieurs solutions finales...</p>
+    </div>
 </body>
 </html>
 
