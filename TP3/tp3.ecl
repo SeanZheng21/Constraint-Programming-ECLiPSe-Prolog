@@ -45,10 +45,10 @@ domaines(Taches,Fin):-
 	(for(I,1,D),
 	param(Taches,Fin)
 	do
-		tache(_, _ ,M, D) is Taches[I],
+		tache(S, _ ,M, D) is Taches[I],
 		M&::machine,
 		D#>=0,
-		D#=<Fin
+		Fin#>=S+D
 	).
 /**
 taches(Taches),domaines(Taches,5).
@@ -62,7 +62,7 @@ getVarList(Taches,Fin,[Fin|Liste]):-
 	param(Taches),
 	fromto([],In,Out,Liste)
 	do
-		tache(_, _, Machine, Debut) is Taches[I],
+		tache(_, _, _, Debut) is Taches[I],
 		Out = [Debut|In]
 	).
 /**
@@ -72,7 +72,6 @@ taches(Taches),domaines(Taches,5),getVarList(Taches,5,List).
 /**Q3.5*/
 solve(Taches,Fin):-
 	taches(Taches),
-	FinTotal = 0,
 	domaines(Taches,Fin),
 	precedences(Taches),
 	conflicts(Taches),
@@ -81,7 +80,7 @@ solve(Taches,Fin):-
 	ecrit_taches(Taches).
 
 /**
-taches(Taches),solve(Taches,Fin).
+solve(Taches,Fin).
 */
 
 /*Q3.6*/
@@ -107,19 +106,18 @@ taches(Taches),solve(Taches,Fin).
 conflicts(Taches):-
 	dim(Taches,Dim),
 	D is Dim[1],
-	(for(I,1,D),
+	(for(I,1,D-1),
 	param(Taches,D)
 	do
 		tache(Duree, _, Machine, Debut) is Taches[I],
 		I2 is I+1,
 		(for(J,I2,D),
-		param(Taches,Debut,Duree)
+		param(Taches,Debut,Duree,Machine)
 		do
 			tache(Duree2, _, Machine2, Debut2) is Taches[J],
-			(Machine &\= Machine2) => ((Debut#>=Debut2+Duree2) or (Debut+Duree#=<Debut2))
+			((Debut2 #>= Debut) and (Debut2 #< (Debut + Duree))) => (Machine &\=Machine2),
+			((Debut #>= Debut2) and (Debut #< (Debut2 + Duree2))) => (Machine &\=Machine2)
 		)
 	).
-
-
 
 

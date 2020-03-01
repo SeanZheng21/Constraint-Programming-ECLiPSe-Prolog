@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Compte Rendu TP3</title>
+	<meta charset="UTF-8">
 </head>
 <body>
 	<h1>Compte Rendu TP3</h1>
@@ -196,6 +197,57 @@ conflicts(Taches):-
             </code>
         </pre>
     </div>
+    <h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 20]: solve(Taches,Fin).
+tache(3, [], m1, 0)
+tache(8, [], m1, 0)
+tache(8, [4, 5], m1, 6)
+tache(6, [], m2, 0)
+tache(3, [1], m2, 3)
+tache(4, [1, 7], m1, 22)
+tache(8, [3, 5], m1, 14)
+tache(6, [4], m2, 6)
+tache(6, [6, 7], m2, 26)
+tache(6, [9, 12], m2, 32)
+tache(3, [1], m2, 3)
+tache(6, [7, 8], m2, 22)
+
+Taches = [](tache(3, [], m1, 0), tache(8, [], m1, 0), tache(8, [4, 5], m1, 6), tache(6, [], m2, 0), tache(3, [1], m2, 3), tache(4, [1, 7], m1, 22), tache(8, [3, 5], m1, 14), tache(6, [4], m2, 6), tache(6, [6, 7], m2, 26), tache(6, [9, 12], m2, 32), tache(3, [1], m2, 3), tache(6, [7, 8], m2, 22))
+Fin = 38
+Yes (0.01s cpu, solution 1, maybe more) ? 
+            </code>
+        </pre>
+        <h2>Question 8</h2>
+        <pre>
+            <code>
+[eclipse 36]: solve(Taches,Fin).
+tache(3, [], m1, 0)
+tache(8, [], m1, 29)
+tache(8, [4, 5], m1, 9)
+tache(6, [], m2, 0)
+tache(3, [1], m2, 6)
+tache(4, [1, 7], m1, 25)
+tache(8, [3, 5], m1, 17)
+tache(6, [4], m2, 12)
+tache(6, [6, 7], m2, 31)
+tache(6, [9, 12], m2, 37)
+tache(3, [1], m2, 9)
+tache(6, [7, 8], m2, 25)
+
+Taches = [](tache(3, [], m1, 0), tache(8, [], m1, 29), tache(8, [4, 5], m1, 9), tache(6, [], m2, 0), tache(3, [1], m2, 6), tache(4, [1, 7], m1, 25), tache(8, [3, 5], m1, 17), tache(6, [4], m2, 12), tache(6, [6, 7], m2, 31), tache(6, [9, 12], m2, 37), tache(3, [1], m2, 9), tache(6, [7, 8], m2, 25))
+Fin = 43
+Yes (0.02s cpu, solution 1, maybe more) ? 
+[eclipse 37]: Fin#&lt;43,solve(Taches,Fin).
+
+No (0.01s cpu)
+            </code>
+        </pre>
+        <p>
+            La première solution offerte se finit en 43 unités de temps, par conséquent nous cherchons une solution qui se finit en moins de temps que celle-ci, 
+            puisque nous n'en trouvons pas, nous savons que nous avons la plus rapide
+        </p>
 </body>
 </html>
 
