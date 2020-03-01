@@ -75,19 +75,27 @@ enigma_unary(Rue):-
 enigma_binary(Rue):-
     (foreach(m(P, C, B, V, A, N),Rue)
     do 
-        ( C &= verte ) => (foreach(m(_, C2, _, _, _, N2),Rue)
+        ( C &= verte ) => (
+            foreach(m(_, C2, _, _, _, N2),Rue),
+            param(N)
             do
             ( C2 &= blanche ) => ( (N2 #= N+1) or (N2 #= N-1) )
         ),
-        (A &= renard) => (foreach(m(_,_, _,V2, _, N2),Rue)
+        (A &= renard) => (
+            foreach(m(_,_, _,V2, _, N2),Rue),
+            param(N)
             do
             (V2 &= ford) => ((N2 #= N+1) or (N2 #= N-1))
         ),
-        (A &= cheval) => (foreach(m(_,_, _,V2, _, N2),Rue)
+        (A &= cheval) => (
+            foreach(m(_,_, _,V2, _, N2),Rue),
+            param(N)
             do
             (V2 &= toyota)=>((N2 #= N+1) or (N2 #= N-1))
         ),
-        (P &= norvegien)=>(foreach(m(_,C2, _,_, _, N2),Rue)
+        (P &= norvegien)=>(
+            foreach(m(_,C2, _,_, _, N2),Rue),
+            param(N)
             do
             (C2 &= bleue)=>((N2 #= N+1) or (N2 #= N-1))
         )
@@ -99,6 +107,7 @@ resoudre(Rue):-
     rue(Rue),
     getVarList(Rue,Liste),
     enigma_unary(Rue),
+    enigma_binary(Rue),
     labeling_symbolic(Liste),
     ecrit_maisons(Rue).
 
