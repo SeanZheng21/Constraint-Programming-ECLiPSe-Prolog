@@ -28,6 +28,8 @@ choixCouleur(CouleurBateau,CouleurVoiture):-
 		<pre>
 			<code>
 choixCouleur(noir,vert(clair)).
+
+Yes (0.00s cpu)
 			</code>
 		</pre>
 	</div>
@@ -55,7 +57,22 @@ isBetween(Var,Min,Max):-
 		<pre>
 			<code>
 ?- isBetween(5,2,7).
+Yes (0.00s cpu, solution 1, maybe more)
+
 ?- isBetween(X,6,8).
+[eclipse 4]: ?- isBetween(X,6,8).
+
+X = 6
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+X = 7
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+X = 8
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+
+No (0.00s cpu)
+
 			</code>
 		</pre>
 	</div>
@@ -75,6 +92,24 @@ commande(NbResistance,NbCondensateur):-
 		<pre>
 			<code>
 commande(X,Y).
+[eclipse 5]: commande(X,Y).
+lists.eco  loaded in 0.00 seconds
+
+X = 9001
+Y = 9000
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+X = 9002
+Y = 9000
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+X = 9002
+Y = 9001
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+
+X = 9003
+Y = 9000
+
 commande(6500,9500). No
 commande(10000,8000). No
 			</code>
@@ -425,7 +460,10 @@ faitSuite([X,Y,Z|R]):-
 		<h3>Tests</h3>
 		<pre>
 			<code>
-//
+[eclipse 10]: faitSuite([1,2,3,4,5]).
+
+Yes (0.00s cpu)
+
 			</code>
 		</pre>
 	</div>
@@ -447,6 +485,14 @@ contre_exemple:-
 	labeling([X,Y]).
 			</code>
 		</pre>
+        <pre>
+        	<code>
+periode_neuf([1,2,3,4,5,6,7,8,9]).
+
+Yes (0.00s cpu)
+
+			</code>
+        </pre>
 		<p>Pour avoir une période de 9 il suffit que le 10 élément soit égal au 1er et le 11e au 2e, puisque la suite est définie par ses deux derniers éléments
 lorsqu'on execute contre_exemple, on obtient No, ce qui signifie qu'aucune liste qui satisfait la suite n'est pas de période 9
 -> Toutes les listes satisfaisant la suite sont de période 9</p>

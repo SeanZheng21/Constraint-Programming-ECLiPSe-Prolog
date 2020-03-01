@@ -29,7 +29,11 @@ taches(Taches):-
         <h3>Test</h3>
         <pre>
             <code>
-taches(Taches).
+[eclipse 2]: taches(T).
+
+T = [](tache(3, [], m1, _181), tache(8, [], m1, _186), tache(8, [4, 5], m1, _191), tache(6, [], m2, _200), tache(3, [1], m2, _205), tache(4, [1, 7], m1, _212), tache(8, [3, 5], m1, _221), tache(6, [4], m2, _230), tache(6, [6, 7], m2, _237), tache(6, [9, 12], m2, _246), tache(3, [1], m2, _255), tache(6, [7, 8], m2, _262))
+Yes (0.00s cpu)
+
             </code>
         </pre>
 	</div>
@@ -55,6 +59,23 @@ ecrit_taches(Taches):-
         <pre>
             <code>
 taches(Taches),ecrit_taches(Taches).
+[eclipse 3]: taches(Taches),ecrit_taches(Taches).
+tache(3, [], m1, _243)
+tache(8, [], m1, _248)
+tache(8, [4, 5], m1, _253)
+tache(6, [], m2, _262)
+tache(3, [1], m2, _267)
+tache(4, [1, 7], m1, _274)
+tache(8, [3, 5], m1, _283)
+tache(6, [4], m2, _292)
+tache(6, [6, 7], m2, _299)
+tache(6, [9, 12], m2, _308)
+tache(3, [1], m2, _317)
+tache(6, [7, 8], m2, _324)
+
+Taches = [](tache(3, [], m1, _243), tache(8, [], m1, _248), tache(8, [4, 5], m1, _253), tache(6, [], m2, _262), tache(3, [1], m2, _267), tache(4, [1, 7], m1, _274), tache(8, [3, 5], m1, _283), tache(6, [4], m2, _292), tache(6, [6, 7], m2, _299), tache(6, [9, 12], m2, _308), tache(3, [1], m2, _317), tache(6, [7, 8], m2, _324))
+Yes (0.00s cpu)
+
             </code>
         </pre>
     </div>
@@ -83,7 +104,11 @@ domaines(Taches,Fin):-
         <h3>Test</h3>
         <pre>
             <code>
-taches(Taches),domaines(Taches,5).
+[eclipse 4]: taches(Taches),domaines(Taches,5).
+
+Taches = [](tache(3, [], m1, _439{0 .. 5}), tache(8, [], m1, _576{0 .. 5}), tache(8, [4, 5], m1, _713{0 .. 5}), tache(6, [], m2, _850{0 .. 5}), tache(3, [1], m2, _987{0 .. 5}), tache(4, [1, 7], m1, _1124{0 .. 5}), tache(8, [3, 5], m1, _1261{0 .. 5}), tache(6, [4], m2, _1398{0 .. 5}), tache(6, [6, 7], m2, _1535{0 .. 5}), tache(6, [9, 12], m2, _1672{0 .. 5}), tache(3, [1], m2, _1809{0 .. 5}), tache(6, [7, 8], m2, _1946{0 .. 5}))
+Yes (0.00s cpu)
+
             </code>
         </pre>
     </div>
@@ -111,7 +136,12 @@ getVarList(Taches,Fin,[Fin|Liste]):-
         <h3>Test</h3>
         <pre>
             <code>
-taches(Taches),domaines(Taches,5),getVarList(Taches,5,List).
+[eclipse 5]: taches(Taches),domaines(Taches,5),getVarList(Taches,5,List).
+
+Taches = [](tache(3, [], m1, _513{0 .. 5}), tache(8, [], m1, _650{0 .. 5}), tache(8, [4, 5], m1, _787{0 .. 5}), tache(6, [], m2, _924{0 .. 5}), tache(3, [1], m2, _1061{0 .. 5}), tache(4, [1, 7], m1, _1198{0 .. 5}), tache(8, [3, 5], m1, _1335{0 .. 5}), tache(6, [4], m2, _1472{0 .. 5}), tache(6, [6, 7], m2, _1609{0 .. 5}), tache(6, [9, 12], m2, _1746{0 .. 5}), tache(3, [1], m2, _1883{0 .. 5}), tache(6, [7, 8], m2, _2020{0 .. 5}))
+List = [5, _2020{0 .. 5}, _1883{0 .. 5}, _1746{0 .. 5}, _1609{0 .. 5}, _1472{0 .. 5}, _1335{0 .. 5}, _1198{0 .. 5}, _1061{0 .. 5}, _924{0 .. 5}, _787{0 .. 5}, _650{0 .. 5}, _513{0 .. 5}]
+Yes (0.00s cpu)
+
             </code>
         </pre>
     </div>
@@ -138,7 +168,24 @@ solve(Taches,Fin):-
         <h3>Test</h3>
         <pre>
             <code>
-taches(Taches),solve(Taches,Fin).
+[eclipse 6]: taches(Taches),solve(Taches,Fin).
+lists.eco  loaded in 0.00 seconds
+tache(3, [], m1, 0)
+tache(8, [], m1, 0)
+tache(8, [4, 5], m1, 6)
+tache(6, [], m2, 0)
+tache(3, [1], m2, 3)
+tache(4, [1, 7], m1, 22)
+tache(8, [3, 5], m1, 14)
+tache(6, [4], m2, 6)
+tache(6, [6, 7], m2, 26)
+tache(6, [9, 12], m2, 32)
+tache(3, [1], m2, 3)
+tache(6, [7, 8], m2, 22)
+
+Taches = [](tache(3, [], m1, 0), tache(8, [], m1, 0), tache(8, [4, 5], m1, 6), tache(6, [], m2, 0), tache(3, [1], m2, 3), tache(4, [1, 7], m1, 22), tache(8, [3, 5], m1, 14), tache(6, [4], m2, 6), tache(6, [6, 7], m2, 26), tache(6, [9, 12], m2, 32), tache(3, [1], m2, 3), tache(6, [7, 8], m2, 22))
+Fin = 32
+
             </code>
         </pre>
     </div>
@@ -168,7 +215,24 @@ precedences(Taches):-
         <h3>Test</h3>
         <pre>
             <code>
-taches(Taches),solve(Taches,Fin).
+[eclipse 7]: taches(Taches),solve(Taches,Fin).
+tache(3, [], m1, 0)
+tache(8, [], m1, 0)
+tache(8, [4, 5], m1, 6)
+tache(6, [], m2, 0)
+tache(3, [1], m2, 3)
+tache(4, [1, 7], m1, 22)
+tache(8, [3, 5], m1, 14)
+tache(6, [4], m2, 6)
+tache(6, [6, 7], m2, 26)
+tache(6, [9, 12], m2, 32)
+tache(3, [1], m2, 3)
+tache(6, [7, 8], m2, 22)
+
+Taches = [](tache(3, [], m1, 0), tache(8, [], m1, 0), tache(8, [4, 5], m1, 6), tache(6, [], m2, 0), tache(3, [1], m2, 3), tache(4, [1, 7], m1, 22), tache(8, [3, 5], m1, 14), tache(6, [4], m2, 6), tache(6, [6, 7], m2, 26), tache(6, [9, 12], m2, 32), tache(3, [1], m2, 3), tache(6, [7, 8], m2, 22))
+Fin = 32
+
+
             </code>
         </pre>
     </div>
@@ -193,6 +257,17 @@ conflicts(Taches):-
             (Machine &\= Machine2) => ((Debut#>=Debut2+Duree2) or (Debut+Duree#=&gt;Debut2))
         )
     ).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 10]: taches(T),conflicts(T).
+
+T = [](tache(3, [], m1, _1336{-1.0Inf .. 1.0Inf}), tache(8, [], m1, _1319{-1.0Inf .. 1.0Inf}), tache(8, [4, 5], m1, _2557{-1.0Inf .. 1.0Inf}), tache(6, [], m2, _3778{-1.0Inf .. 1.0Inf}), tache(3, [1], m2, _4999{-1.0Inf .. 1.0Inf}), tache(4, [1, 7], m1, _6220{-1.0Inf .. 1.0Inf}), tache(8, [3, 5], m1, _7441{-1.0Inf .. 1.0Inf}), tache(6, [4], m2, _8662{-1.0Inf .. 1.0Inf}), tache(6, [6, 7], m2, _9883{-1.0Inf .. 1.0Inf}), tache(6, [9, 12], m2, _11104{-1.0Inf .. 1.0Inf}), tache(3, [1], m2, _12325{-1.0Inf .. 1.0Inf}), tache(6, [7, 8], m2, _13546{-1.0Inf .. 1.0Inf}))
+
+
             </code>
         </pre>
     </div>

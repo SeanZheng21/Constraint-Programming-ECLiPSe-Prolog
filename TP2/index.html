@@ -5,9 +5,9 @@
 </head>
 <body>
 	<h1>Compte Rendu TP2</h1>
-	<!-- -----------Q--------------- -->
+	<!-- -----------Q1--------------- -->
 	<div>
-		<h2>Question</h2>
+		<h2>Question1</h2>
 		<pre>
 			<code>
 :-lib(ic).
@@ -60,7 +60,9 @@ rue([m(P1, C1, B1, V1, A1, 1), m(P2, C2, B2, V2, A2, 2), m(P3, C3, B3, V3, A3, 3
 		<h3>Tests</h3>
 		<pre>
 			<code>
-[m(anglais,rouge,cafe,bmw,chien,1),m(espagnol,verte,the,toyota,serpents,2),m(ukrainien,jaune,eau,ford,zebre,3),m(norvegien,bleue,lait,honda,renard,4),m(japonais,blanche,jus,datsun,cheval,5)].
+[eclipse 4]: rue([m(anglais,rouge,cafe,bmw,chien,1),m(espagnol,verte,the,toyota,serpents,2),m(ukrainien,jaune,eau,ford,zebre,3),m(norvegien,bleue,lait,honda,renard,4),m(japonais,blanche,jus,datsun,cheval,5)]).
+
+Yes (0.00s cpu)
 			</code>
 		</pre>
 	</div>
@@ -77,6 +79,20 @@ ecrit_maisons(Rue):-
     ).
 			</code>
 		</pre>
+		<h3>Tests</h3>
+        <pre>
+            <code>
+[eclipse 6]: ecrit_maisons([m(anglais,rouge,cafe,bmw,chien,1),m(espagnol,verte,the,toyota,serpents,2),m(ukrainien,jaune,eau,ford,zebre,3),m(norvegien,bleue,lait,honda,renard,4),m(japonais,blanche,jus,datsun,cheval,5)]).
+m(anglais, rouge, cafe, bmw, chien, 1)
+m(espagnol, verte, the, toyota, serpents, 2)
+m(ukrainien, jaune, eau, ford, zebre, 3)
+m(norvegien, bleue, lait, honda, renard, 4)
+m(japonais, blanche, jus, datsun, cheval, 5)
+
+Yes (0.00s cpu)
+
+            </code>
+        </pre>
 	</div>
 
 		<!-- -----------Q5--------------- -->
@@ -98,6 +114,16 @@ labeling_symbolic(Liste):-
     ).
 			</code>
 		</pre>
+		<h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 7]: getVarList([m(anglais,rouge,cafe,bmw,chien,1),m(espagnol,verte,the,toyota,serpents,2),m(ukrainien,jaune,eau,ford,zebre,3),m(norvegien,bleue,lait,honda,renard,4),m(japonais,blanche,jus,datsun,cheval,5)],L). 
+
+L = [japonais, blanche, jus, datsun, cheval, norvegien, bleue, lait, honda, renard, ukrainien, jaune, eau, ford, zebre, espagnol, verte, the, toyota, ...]
+Yes (0.00s cpu)
+            </code>
+        </pre>
+
 	</div>
 
 		<!-- -----------Q6--------------- -->
@@ -159,6 +185,22 @@ resoudre(Rue):-
 
 			</code>
 		</pre>
+
+		<h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 11]: resoudre(R).
+m(norvegien, blanche, jus, honda, cheval, 1)
+m(ukrainien, jaune, the, toyota, renard, 2)
+m(japonais, bleue, lait, datsun, zebre, 3)
+m(espagnol, verte, cafe, ford, chien, 4)
+m(anglais, rouge, eau, bmw, serpents, 5)
+
+R = [m(norvegien, blanche, jus, honda, cheval, 1), m(ukrainien, jaune, the, toyota, renard, 2), m(japonais, bleue, lait, datsun, zebre, 3), m(espagnol, verte, cafe, ford, chien, 4), m(anglais, rouge, eau, bmw, serpents, 5)]
+Yes (0.00s cpu, solution 1, maybe more) ? 
+
+            </code>
+        </pre>
 	</div>
 </body>
 </html>
