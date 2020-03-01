@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Compte Rendu TP3</title>
+</head>
+<body>
+	<h1>Compte Rendu TP3</h1>
+	<!-- -----------Q1--------------- -->
+	<div>
+		<h2>Question1</h2>
+		<pre>
+			<code>
+taches(Taches):-
+    Taches = [](tache(3, [],m1, _),
+    tache(8, [],m1, _),
+    tache(8, [4,5],  m1, _),
+    tache(6, [],m2, _),
+    tache(3, [1],m2, _),
+    tache(4, [1,7],  m1, _),
+    tache(8, [3,5],  m1, _),
+    tache(6, [4],m2, _),
+    tache(6, [6,7],  m2, _),
+    tache(6, [9,12], m2, _),
+    tache(3, [1],m2, _),
+    tache(6, [7,8],  m2, _)).
+			</code>
+		</pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches).
+            </code>
+        </pre>
+	</div>
+
+	   <!-- -----------Q2--------------- -->
+    <div>
+        <h2>Question2</h2>
+        <pre>
+            <code>
+ecrit_taches(Taches):-
+    dim(Taches,Dim),
+    D is Dim[1],
+    (for(I,1,D),
+    param(Taches)
+    do
+        Var is Taches[I],
+        writeln(Var)
+    ).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches),ecrit_taches(Taches).
+            </code>
+        </pre>
+    </div>
+
+
+
+    <!-- -----------Q3--------------- -->
+    <div>
+        <h2>Question3</h2>
+        <pre>
+            <code>
+domaines(Taches,Fin):-
+    dim(Taches,Dim),
+    D is Dim[1],
+    (for(I,1,D),
+    param(Taches,Fin)
+    do
+        tache(_, _ ,M, D) is Taches[I],
+        M&::machine,
+        D#>=0,
+        D#=&lt;Fin
+    ).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches),domaines(Taches,5).
+            </code>
+        </pre>
+    </div>
+
+
+
+    <!-- -----------Q4--------------- -->
+    <div>
+        <h2>Question4</h2>
+        <pre>
+            <code>
+getVarList(Taches,Fin,[Fin|Liste]):-
+    dim(Taches,Dim),
+    D is Dim[1],
+    (for(I,1,D),
+    param(Taches),
+    fromto([],In,Out,Liste)
+    do
+        tache(_, _, Machine, Debut) is Taches[I],
+        Out = [Debut|In]
+    ).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches),domaines(Taches,5),getVarList(Taches,5,List).
+            </code>
+        </pre>
+    </div>
+
+
+
+    <!-- -----------Q5--------------- -->
+    <div>
+        <h2>Question5</h2>
+        <pre>
+            <code>
+solve(Taches,Fin):-
+    taches(Taches),
+    FinTotal = 0,
+    domaines(Taches,Fin),
+    precedences(Taches),
+    conflicts(Taches),
+    getVarList(Taches,Fin,Liste),
+    labeling(Liste),
+    ecrit_taches(Taches).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches),solve(Taches,Fin).
+            </code>
+        </pre>
+    </div>
+
+    <!-- -----------Q6--------------- -->
+    <div>
+        <h2>Question6</h2>
+        <pre>
+            <code>
+precedences(Taches):-
+    dim(Taches,Dim),
+    D is Dim[1],
+    (for(I,1,D),
+    param(Taches)
+    do
+        tache(_, Noms,_, Debut) is Taches[I],
+        (foreach(Nom,Noms),
+        param(Taches,Debut)
+        do
+            tache(DureePrec, _, _, DebutPrec) is Taches[Nom],
+            Debut#>= DureePrec+DebutPrec
+        )
+    ).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+taches(Taches),solve(Taches,Fin).
+            </code>
+        </pre>
+    </div>
+
+        <!-- -----------Q7--------------- -->
+    <div>
+        <h2>Question7</h2>
+        <pre>
+            <code>
+conflicts(Taches):-
+    dim(Taches,Dim),
+    D is Dim[1],
+    (for(I,1,D),
+    param(Taches,D)
+    do
+        tache(Duree, _, Machine, Debut) is Taches[I],
+        I2 is I+1,
+        (for(J,I2,D),
+        param(Taches,Debut,Duree)
+        do
+            tache(Duree2, _, Machine2, Debut2) is Taches[J],
+            (Machine &\= Machine2) => ((Debut#>=Debut2+Duree2) or (Debut+Duree#=&gt;Debut2))
+        )
+    ).
+            </code>
+        </pre>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
