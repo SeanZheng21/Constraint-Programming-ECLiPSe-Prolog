@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Compte Rendu TP4</title>
+</head>
+<body>
+	<h1>Compte Rendu TP4</h1>
+	<!-- -----------Q1--------------- -->
+	<div>
+		<h2>Question1</h2>
+		<pre>
+			<code>
+getData(TailleEquipes,NbEquipes,CapaBateaux,NbBateaux,NbConf):-
+    TailleEquipes = [](5,5,2,1),
+    NbEquipes is 4,
+    CapaBateaux = [](7,6,5),
+    NbBateaux is 3,
+    NbConf is 3.
+			</code>
+		</pre>
+	</div>
+
+	   <!-- -----------Q2--------------- -->
+    <div>
+        <h2>Question2</h2>
+        <pre>
+            <code>
+defineVars(T,NbEquipes,NbConf,NbBateaux):-
+    dim(T,[NbEquipes,NbConf]),
+    T#::1..NbBateaux.
+
+            </code>
+        </pre>
+    </div>
+
+
+    <!-- -----------Q3--------------- -->
+    <div>
+        <h2>Question3</h2>
+        <pre>
+            <code>
+getVarList(T,List):-
+    dim(T,Dim),
+    D1 is Dim[1],
+    D2 is Dim[2,1],
+    (multifor([J,I],1,[D2,D1]),
+    param(T),
+    fromto([],In,Out,List2)
+    do
+        Var is T[I,J],
+        Out = [Var|In]
+    ),
+    reverse(List2,List).    
+
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 25]: defineVars(T,4,3,3),getVarList(T,List).
+
+T = []([](_443{1 .. 3}, _443, _443), [](_485{1 .. 3}, _485, _485), [](_527{1 .. 3}, _527, _527), [](_569{1 .. 3}, _569, _569))
+List = [_569{1 .. 3}, _527{1 .. 3}, _485{1 .. 3}, _443{1 .. 3}]
+Yes (0.00s cpu)
+            </code>
+        </pre>
+    </div>
+
+
+    <!-- -----------Q4--------------- -->
+    <div>
+        <h2>Question4</h2>
+        <pre>
+            <code>
+ solve(T).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+T = []([](1, 1, 1), [](1, 1, 1), [](1, 1, 1), [](1, 1, 1))
+            </code>
+        </pre>
+    </div>
+
+
+    <!-- -----------Q5--------------- -->
+    <div>
+        <h2>Question5</h2>
+        <pre>
+            <code>
+pasMemeBateau(T):-
+    (foreacharg(Line,T)
+    do
+        alldifferent(Line)
+    ).
+/*
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+[eclipse 112]: solve(T).
+
+T = []([](1, 2, 3), [](1, 2, 3), [](1, 2, 3), [](1, 2, 3))
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+T = []([](1, 2, 3), [](1, 2, 3), [](1, 2, 3), [](1, 3, 2))
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+T = []([](1, 2, 3), [](1, 2, 3), [](1, 3, 2), [](1, 2, 3))
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+
+T = []([](1, 2, 3), [](1, 2, 3), [](1, 3, 2), [](1, 3, 2))
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+
+            </code>
+        </pre>
+    </div>
+
+
+    <!-- -----------Q6--------------- -->
+    <div>
+        <h2>Question6</h2>
+        <pre>
+            <code>
+twiceInArray(Array,Res):-
+    dim(Array,Dim),
+    D is Dim[1],
+    D2 is D-1,
+    (for(I,1,D2),
+    param(Array,D,Res)
+    do
+        K is I+1,
+        (for(J,K,D),
+        param(I,Array),
+        fromto([],In,Out,Res)
+        do
+            V1 is Array[I],
+            (V1 is Array[J]) -> (Out = [V1|Res])
+            
+        )
+    ).
+solve(T):-
+    getData(TailleEquipes,NbEquipes,CapaBateaux,NbBateaux,NbConf),
+    defineVars(T,NbEquipes,NbConf,NbBateaux),
+    pasMemeBateau(T),
+    getVarList(T,L),
+    labeling(L).
+            </code>
+        </pre>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
