@@ -208,6 +208,30 @@ poseConstraintsMin(Profitt).
         </pre>
     </div>
 
+    <!-- -----------Q6--------------- -->
+    <div>
+        <h2>Question6</h2>
+        <pre>
+            <code>
+anotherPoseConstraints(Fab,NbTechTotal, Profit):-
+    vecFab(Fab),
+    sumNbTech(Fab,NbTechTotal),
+    NbTechTotal #=<22,
+    sumProfit(Fab, Profit),
+    labeling(Fab).
+
+anotherPoseConstraintsMin(Profitt):-
+    minimize(anotherPoseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
+            </code>
+        </pre>
+
+        <h3>Test</h3>
+        <pre>
+            <code>
+anotherPoseConstraintsMin(Profitt).
+            </code>        
+        </pre>
+    </div>
 </body>
 </html>
 

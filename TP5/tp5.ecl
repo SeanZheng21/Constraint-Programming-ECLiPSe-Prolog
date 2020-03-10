@@ -110,7 +110,20 @@ generateMinX(XMin):-
 /*Question 5*/
 
 poseConstraintsMin(Profitt):-
-    minimize(poseConstraints(_Fab, _NbTechTotal, Profitt), 1000 - Profitt).
+    minimize(poseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
 /*Test*/
 /*poseConstraintsMin(Profitt).*/
 /*======================*/
+
+/* Question 6 */
+anotherPoseConstraints(Fab,NbTechTotal, Profit):-
+    vecFab(Fab),
+    sumNbTech(Fab,NbTechTotal),
+    NbTechTotal #=<22,
+    sumProfit(Fab, Profit),
+    labeling(Fab).
+
+anotherPoseConstraintsMin(Profitt):-
+    minimize(anotherPoseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
+/*Test*/
+/*anotherPoseConstraintsMin(Profitt).*/
