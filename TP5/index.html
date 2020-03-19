@@ -160,7 +160,8 @@ generateMinX(XMin):-
     minimize(generateX(XMin), XMin).
             </code>
         </pre>
-
+        <p>Labeling sur [X,Y,Z,W] donne plusieur fois meme valeur de X avec different Y,Z,W.</p>
+        <p>Labeling sur [X] donne les X possibles sans labeling Y,Z,W</p>
         <h3>Test</h3>
         <pre>
             <code>
@@ -195,15 +196,16 @@ Yes (0.01s cpu)
         <h2>Question5</h2>
         <pre>
             <code>
-poseConstraintsMin(Profitt):-
-    minimize(poseConstraints(_Fab, _NbTechTotal, Profitt), 1000 - Profitt).
+poseConstraintsMin(Fab,NbTechTotal, ProfitMin):-
+    minimize(poseConstraints(Fab, NbTechTotal, Profitt), Profit),
+    ProfitMin is  99999 - Profit.
             </code>
         </pre>
 
         <h3>Test</h3>
         <pre>
             <code>
-poseConstraintsMin(Profitt).
+poseConstraintsMin(Fab,NbTechTotal, ProfitMin).
             </code>        
         </pre>
     </div>
@@ -216,19 +218,20 @@ poseConstraintsMin(Profitt).
 anotherPoseConstraints(Fab,NbTechTotal, Profit):-
     vecFab(Fab),
     sumNbTech(Fab,NbTechTotal),
-    NbTechTotal #=<22,
+    NbTechTotal #=&lt;22,
     sumProfit(Fab, Profit),
+    Profit #&gt;=1000,
     labeling(Fab).
 
-anotherPoseConstraintsMin(Profitt):-
-    minimize(anotherPoseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
+anotherPoseConstraintsMin(Fab,NbTechTotal, Profit):-
+    minimize(anotherPoseConstraints(Fab, NbTechTotal, Profit), NbTechTotal).
             </code>
         </pre>
 
         <h3>Test</h3>
         <pre>
             <code>
-anotherPoseConstraintsMin(Profitt).
+anotherPoseConstraintsMin(Fab,NbTechTotal, Profit).
             </code>        
         </pre>
     </div>

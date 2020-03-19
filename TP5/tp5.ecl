@@ -15,7 +15,6 @@ vecFab(Fab):-
     Fab #:: 0..1.
 
 /*Test*/
-/*
 vecNbTech(NbT).
 vecJour(J).
 vecProfit(Pr).
@@ -109,10 +108,11 @@ generateMinX(XMin):-
 
 /*Question 5*/
 
-poseConstraintsMin(Profitt):-
-    minimize(poseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
+poseConstraintsMin(Fab,NbTechTotal, ProfitMin):-
+    minimize(poseConstraints(Fab, NbTechTotal, Profitt), Profit),
+    ProfitMin is  99999 - Profit.
 /*Test*/
-/*poseConstraintsMin(Profitt).*/
+/*poseConstraintsMin(Fab,NbTechTotal, ProfitMin).*/
 /*======================*/
 
 /* Question 6 */
@@ -121,9 +121,25 @@ anotherPoseConstraints(Fab,NbTechTotal, Profit):-
     sumNbTech(Fab,NbTechTotal),
     NbTechTotal #=<22,
     sumProfit(Fab, Profit),
+    Profit #>=1000,
     labeling(Fab).
 
-anotherPoseConstraintsMin(Profitt):-
-    minimize(anotherPoseConstraints(_Fab, _NbTechTotal, Profitt), 10000 - Profitt).
+anotherPoseConstraintsMin(Fab,NbTechTotal, Profit):-
+    minimize(anotherPoseConstraints(Fab, NbTechTotal, Profit), NbTechTotal).
 /*Test*/
-/*anotherPoseConstraintsMin(Profitt).*/
+/*anotherPoseConstraintsMin(Fab,NbTechTotal, Profit).*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
