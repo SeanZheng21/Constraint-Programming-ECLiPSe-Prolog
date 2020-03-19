@@ -1,13 +1,16 @@
-:-lib(branch_and_bound).
-/*Q6.1*/
-:-lib(ic).
-
-poids([](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)).
-
-sieges(S):-
-	dim(S, [10]),
-	S #:: [ -8 .. -1, 1 .. 8].
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Compte Rendu TP5</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<h1>Compte Rendu TP6</h1>
+	<!-- -----------Q1--------------- -->
+	<div>
+        <h2>Prédicats importés du  TP Précédent</h2>
+        <pre>
+            <code>
 vecProduct(V1, V2, VRes):- 
     dim(V1,[D]),
     dim(V2,[D]),
@@ -24,23 +27,36 @@ vecSum(Vec,Sum):-(
 vecDotProduct(V1, V2, S):-
     vecProduct(V1, V2, TmpVec),
     vecSum(TmpVec, S).
+            </code>
+        </pre>
 
+	<h2>Question 1</h2>
+		<pre>
+			<code>
+:-lib(ic).
+
+poids([](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)).
+
+sieges(S):-
+	dim(S, [10]),
+    S #:: [ -8 .. -1, 1 .. 8].
+
+    equilibre(S, P):-
+    vecDotProduct(S, P, 0).
+    
 countPositif(V,Res):-
-	(
-		foreacharg(Elt,V), 
-		fromto(0,In,Out,Res) 
-		do
-		(Elt #> 0) => (Out #= In +1),
-		(Elt #=< 0) => (Out #= In) 
-    ).
+(
+    foreacharg(Elt,V), 
+    fromto(0,In,Out,Res) 
+    do
+    (Elt #> 0) => (Out #= In +1),
+    (Elt #=< 0) => (Out #= In) 
+).
 
 %On sait que s'il y en a 5 à droite il y en aura 5 à gauche
 nbDroite(V):-
-	countPositif(V,C),
-	C #= 5.
-
-equilibre(S, P):-
-	vecDotProduct(S, P, 0).
+countPositif(V,C),
+C #= 5.
 
 parentsAuBout(S):-
 	Lou is S[4],
@@ -69,9 +85,18 @@ solve(Sieges):-
 	sieges(Sieges),
 	constraints(Sieges, Poids),
 	labeling(Sieges).
-
-/*Q6.2*/
-/*
+			</code>
+        </pre>
+        <h3>Tests</h3>
+        <p>
+            Nous ne voyions pas comment tester les prédicats séparément donc nous avons considéré la question 2 comme un test  de la globalité du programme.
+        </p>
+    </div>
+    <div>
+        <h2>Question 2</h2>
+        <h3>Test</h3>
+        <pre>
+            <code>
 solve(S).
 
 S = [](-6, -5, -1, 8, 5, 7, 3, -8, -7, 1)
@@ -91,51 +116,83 @@ Yes (0.03s cpu, solution 5, maybe more) ? ;
 
 S = [](-6, -4, -2, 8, 5, -7, 4, -8, 7, 1)
 Yes (0.04s cpu, solution 6, maybe more) ?
-*/
+            </code>
+        </pre>
+        On obtient bien des solutions où :
+        <ul>
+            <li>
+                Les Valeurs 4 et 8 (les parents) sont le maximum et le minimum du tableau
+            </li>
+            <li>
+                Les valeurs 6 et 9 sont directement adjacentes aux 4 et 8 (vers le milieu)
+            </li>
+            <li>
+                La somme des moments est égale à 0
+            </li>
+            <li>
+                Il y a 5 valeurs négatives et 5 valeurs positives
+            </li>
+        </ul>
+    </div>
 
-/*Q6.3*/
-/*
-En décidant que Lou est le Max et Tom le min, détermine dès le début de quel côté ils seront respectivement.
-Cela supprime toutes les solutions potentielles symmetriques selon le centre de la balançoire.
-*/
+    <div>
+        <h2>Question 3</h2>
+        <p>
+        La symmétrie la plus remarquable est due au fait qu'on équilibre le côté droit et le côté gauche, donc une fois qu'une solution est trouvée, on peut juste l'inverser.
+        Pour éviter cela nous avons modifié le prédicat parentsAuBout pour décider à l'avance quel parent est à gauche et lequel est à droite.
+        </p>
+    </div>
 
-/*Q6.4*/
+    
+    <div>
+        <h2>Question 4</h2>
+        <h3>Prédicats de service</h3>
+        <pre>
+            <code>
 vecAbs(Vector, Abs):-
 	dim(Vector, [Dim]),
 	dim(Abs, [Dim]),
 	(for(Ind, 1, Dim),
 	param(Vector, Abs)
 	do
-		Elt is Vector[Ind],
-		(Elt #> 0) => Abs[Ind] #= Elt,
-		(Elt #=< 0) => Abs[Ind] #= -Elt
-	).
-
-/* Test
-vecAbs([](1,0,-2),X).
-
-X = [](1, 0, 2)
-Yes (0.00s cpu)
-*/
+		Elem is Vector[Ind],
+		(Elem #> 0) => Abs[Ind] #= Elem,
+		(Elem #=< 0) => Abs[Ind] #= -Elem
+    ).
 
 sommeMoments(S, P, Res):-
 	vecAbs(S, SAbs),
 	vecDotProduct(SAbs, P, Res).
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 
-/* Test
+vecAbs([](1,0,-2),X).
+X = [](1, 0, 2)
+Yes (0.00s cpu)
+
+
 sommeMoments([](0,1,-4),[](-2,-3,7),X).
-
 X = 25
 Yes (0.00s cpu)
-*/
-
+            </code>
+        </pre>
+        <h3>Version basique</h3>
+        <pre>
+            <code>
 solve2(Sieges,SommeMoments):-
 	poids(Poids),
 	sieges(Sieges),
 	constraints(Sieges, Poids),
 	sommeMoments(Sieges, Poids, SommeMoments),
 	ic:labeling(Sieges).
-/* Test
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve2(S, SommeMoments), SommeMoments).
 Found a solution with cost 2914
 Found a solution with cost 2858
@@ -168,17 +225,27 @@ Found no solution with cost -1.0Inf .. 1603
 S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
 SommeMoments = 1604
 Yes (2.92s cpu)
-*/
-
-/*Version1*/
+            </code>
+        </pre>
+    </div>
+    <div>
+        <h2>Version 1</h2>
+        <pre>
+            <code>
 solve3(Sieges,SommeMoments):-
 	poids(Poids),
 	sieges(Sieges),
 	constraints(Sieges, Poids),
 	sommeMoments(Sieges, Poids, SommeMoments),
 	search(Sieges, 0, occurence, indomain, complete, []).
-
-/*Test
+            </code>
+        </pre>
+        <p>
+            Dans l'argument +Select, on utilise occurence, une façon classique d'optimiser en labelisant les variables les plus contraintes en priorité.
+        </p>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve3(S, SommeMoments), SommeMoments).
 Found a solution with cost 1890
 Found a solution with cost 1604
@@ -187,20 +254,31 @@ Found no solution with cost -1.0Inf .. 1603
 S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
 SommeMoments = 1604
 Yes (1.10s cpu)
+            </code>
+        </pre>
+        <p>
+            On a quasiment triplé la vitesse d'exécution
+        </p>
 
-On va plus vite
-*/
-
-
-/*Version 2*/
+        <h2>Version 2</h2>
+        <h3>Commentaire</h3>
+        <p>
+            Pour minimiser les moments le plus vite, il vaut mieux placer les personnes sur les places les plus proche du centre.
+            Pour cela on utilise via l'argument +Choice de search le mode indomain_split, pour tester les valeurs au centre du domaine en priorité 
+        </p>
+        <pre>
+            <code>
 solve4(Sieges,SommeMoments):-
 	poids(Poids),
 	sieges(Sieges),
 	constraints(Sieges, Poids),
 	sommeMoments(Sieges, Poids, SommeMoments),
 	search(Sieges, 0, input_order, indomain_split, complete, []).
-
-/*Test
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve4(S, SommeMoments), SommeMoments).
 Found a solution with cost 2914
 Found a solution with cost 2858
@@ -233,20 +311,29 @@ Found no solution with cost -1.0Inf .. 1603
 S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
 SommeMoments = 1604
 Yes (1.85s cpu)
+            </code>
+            <p>
+                On va toujours plus vite que labeling mais pas plus vite que la Version 1
+            </p>
+        </pre>
 
-On va plus vite que labeling mais pas plus vite que occurence
-*/
-
-
-/*Version 3*/
+        <h2>Version 3</h2>
+        <p>
+            On conserve indomain_split mais on reprend le mode occurence
+        </p>
+        <pre>
+            <code>
 solve5(Sieges,SommeMoments):-
 	poids(Poids),
 	sieges(Sieges),
 	constraints(Sieges, Poids),
 	sommeMoments(Sieges, Poids, SommeMoments),
 	search(Sieges, 0, occurence, indomain_split, complete, []).
- 
- /* Test
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve5(S, SommeMoments), SommeMoments).
 Found a solution with cost 1890
 Found a solution with cost 1604
@@ -255,9 +342,22 @@ Found no solution with cost -1.0Inf .. 1603
 S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
 SommeMoments = 1604
 Yes (0.69s cpu)
-*/
+            </code>
+        </pre>
+        <p>
+            Cette fois on est plus rapide que les deux versions précédentes
+        </p>
 
-/*Version 4*/
+        <h2>Version 4</h2>
+        <h3>Commentaire</h3>
+        <p>
+            Puisqu'on cherche à minimiser les moments, on sait que les poids les plus importants vont être les plus proche du centre. 
+            Comme on labelise déjà en essayant les valeurs au centre en premier, on va imposer que les poids les plus importants soient testé en premier.
+            Cette priorité n'est appliquée qu'après la priorité occurence.
+            Puisque le mode occurence quand il a la même priorité s'en remet à l'ordre dans l'input, on va utilise run nouveau prédicat pour changer l'ordre des personnes dans l'input.
+        </p>
+        <pre>
+            <code>
 ordrePoids(Sieges, Res):-
 	dim(Sieges, [Dim]),
 	dim(Res, [Dim]),	
@@ -289,8 +389,11 @@ solve6(Sieges,SommeMoments):-
 	sommeMoments(Sieges, Poids, SommeMoments),
 	ordrePoids(Sieges,Ordre),
 	search(Ordre, 0, occurence, indomain_split, complete, []).
- 
-/*Test
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve6(S, SommeMoments), SommeMoments).
 Found a solution with cost 2426
 Found a solution with cost 2354
@@ -311,11 +414,19 @@ Found no solution with cost -1.0Inf .. 1603
 S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
 SommeMoments = 1604
 Yes (0.61s cpu)
-
-On va encore plus vite
-*/
-
-/* Bonus*/
+            </code>
+        </pre>
+    </div>
+    <div>
+        <h2>Bonus</h2>
+        <p>
+            Remarque : pour réduire au plus tôt le domaine des places de Tom et Lou il est possible d’énoncer des contraintes redondantes
+        </p>
+        <p>
+            En effet pusiqu'on sait qu'ils seront au maximum de leur côté de la balançoire sur lequel il y a 4 autres personnes, on sait qu'ils ont au minimum la 5e place de leur côté
+        </p>
+        <pre>
+            <code>
 parentsAuBout2(S):-
 	Lou is S[4],
 	Tom is S[8],
@@ -327,7 +438,8 @@ parentsAuBout2(S):-
 constraints2(S, P):-
 	equilibre(S, P),
 	parentsAuBout2(S),
-	enfantsAvecParents(S),
+    enfantsAvecParents(S),
+    nbDroite(S),
 	alldifferent(S).
 
 solve7(Sieges,SommeMoments):-
@@ -338,31 +450,54 @@ solve7(Sieges,SommeMoments):-
 	ordrePoids(Sieges,Ordre),
 	search(Ordre, 0, occurence, indomain_split, complete, []).
 
-/* Test 
+            </code>
+        </pre>
+        <h3>Test</h3>
+        <pre>
+            <code>
 minimize(solve7(S, SommeMoments), SommeMoments).
-Found a solution with cost 2454
-Found a solution with cost 2428
-Found a solution with cost 2426
-Found a solution with cost 2328
-Found a solution with cost 2270
+Found a solution with cost 2914
+Found a solution with cost 2864
+Found a solution with cost 2744
+Found a solution with cost 2722
+Found a solution with cost 2694
+Found a solution with cost 2588
+Found a solution with cost 2572
+Found a solution with cost 2432
+Found a solution with cost 2410
+Found a solution with cost 2384
+Found a solution with cost 2322
+Found a solution with cost 2246
 Found a solution with cost 2222
-Found a solution with cost 2180
-Found a solution with cost 2176
-Found a solution with cost 2172
+Found a solution with cost 2202
+Found a solution with cost 2124
+Found a solution with cost 2110
+Found a solution with cost 2078
+Found a solution with cost 2026
 Found a solution with cost 1940
-Found a solution with cost 1912
-Found a solution with cost 1890
-Found a solution with cost 1856
+Found a solution with cost 1908
+Found a solution with cost 1894
+Found a solution with cost 1880
+Found a solution with cost 1844
 Found a solution with cost 1828
+Found a solution with cost 1760
+Found a solution with cost 1712
 Found a solution with cost 1672
+Found a solution with cost 1668
 Found a solution with cost 1666
 Found a solution with cost 1604
-Found a solution with cost 1506
-Found no solution with cost -1.0Inf .. 1505
+Found no solution with cost -1.0Inf .. 1603
 
-S = [](3, -2, 1, 7, -1, -3, 2, -4, 6, 5)
-SommeMoments = 1506
-Yes (0.57s cpu)
+S = [](3, -1, 2, 6, 1, -4, -3, -5, 5, -2)
+SommeMoments = 1604
+Yes (1.06s cpu)
+            </code>
+        </pre>
+        <p>
+            Malgré cela nous n'avons pas amélioré notre vitesse de recherche...
+        </p>
+    </div>
+</body>
 
-On gagne un tout petit peu de temps
-*/
+
+
